@@ -4,13 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CinemaApps.Console
+namespace CinemaApps.SystemConsole
 {
     class Program
     {
+        private static int MovieId;
+        public static int GetId()
+        {
+            return ++MovieId;
+        }
         static void Main(string[] args)
         {
-            System.Console.WriteLine("Hello World");
+            Data users = new Data();
+
+            List<Model.User> Listusers = users.GetUser();
+            List<Model.Movie> ListMovie = users.GetMovie();
+            UserInterface.Execute(Listusers, ListMovie);
+
         }
     }
 }
