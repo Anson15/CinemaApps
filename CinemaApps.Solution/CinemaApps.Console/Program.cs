@@ -15,12 +15,7 @@ namespace CinemaApps.SystemConsole
         }
         static void Main(string[] args)
         {
-            Data users = new Data();
-
-            List<Model.User> Listusers = users.GetUser();
-            List<Model.Movie> ListMovie = users.GetMovie();
-            UserInterface.Execute(Listusers, ListMovie);
-
+            UserInterface.Execute();
         }
     }
 }

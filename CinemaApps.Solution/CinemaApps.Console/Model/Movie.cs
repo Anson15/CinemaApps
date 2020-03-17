@@ -11,11 +11,11 @@ namespace CinemaApps.SystemConsole.Model
         public int MovieId { get; set; }
         public string MovieTitle { get; set; }
         public DateTime ReleaseDate { get; set; }
-        public string Status { get; set; }
+        public status Status { get; set; }
 
-        public Movie()
+        public enum status
         {
-            this.MovieId = Program.GetId();
+            ComingSoon,NowShowing
         }
     }
 }

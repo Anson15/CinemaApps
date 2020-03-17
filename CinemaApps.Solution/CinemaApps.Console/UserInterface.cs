@@ -9,21 +9,19 @@ namespace CinemaApps.SystemConsole
 {
     public class UserInterface
     {
-        public static void Execute(List<Model.User> users, List<Model.Movie> movies)
+        private static Data data = new Data();
+        public static void Execute()
         {
+            data.GetMovie();
+            data.GetUser();
             Model.User user = null;
-            Model.Movie movie = new Model.Movie();
-            bool isTrue = true;
-
-
             System.Console.WriteLine("Welcome To Anson Cinema Ticket App.");
             System.Console.WriteLine("\n \t 1.View all movies");
             System.Console.WriteLine("\t 2.Login");
             System.Console.WriteLine("\t 3.Exit app");
 
 
-
-            while (isTrue == true)
+            while (true)
             {
                 string opt = System.Console.ReadLine();
 
@@ -34,7 +32,7 @@ namespace CinemaApps.SystemConsole
 
                         var table = new ConsoleTable("ID", "Movie Title", "Release Date", "Status");
 
-                        foreach (var item in movies)
+                        foreach (var item in data.Movies)
                         {
                             table.AddRow(item.MovieId, item.MovieTitle, item.ReleaseDate, item.Status);
                         }
@@ -50,12 +48,11 @@ namespace CinemaApps.SystemConsole
                         string username = System.Console.ReadLine();
                         System.Console.Write(" Password : ");
                         string password = System.Console.ReadLine();
-                        foreach (var User in users)
+                        foreach (var User in data.Users)
                         {
                             if (User.Username == username && User.Password == password)
                             {
                                 user = User;
-                                isTrue = false;
                             }
                         }
 
@@ -79,11 +76,12 @@ namespace CinemaApps.SystemConsole
                                     case "1":
                                         var Showingmovie = new ConsoleTable("ID", "Movie Title", "Release Date");
 
-                                        foreach (var item in movies)
+                                        foreach (var movies in data.Movies)
                                         {
-                                            if (item.Status == "Now Showing")
+                                            if (movies.Status == Model.Movie.status.NowShowing)
                                             {
-                                                Showingmovie.AddRow(item.MovieId, item.MovieTitle, item.ReleaseDate);
+                                                Showingmovie.AddRow(movies.MovieId, movies.MovieTitle, movies.ReleaseDate);
+
                                             }
                                         }
 
@@ -92,19 +90,16 @@ namespace CinemaApps.SystemConsole
                                         System.Console.Write("Enter the selected movie ID : ");
                                         int Id = Convert.ToInt32(System.Console.ReadLine());
 
-                                        while (Id != movie.MovieId)
+                                        var checkMovie = data.Movies.Where(m => m.MovieId == Id && m.Status == Model.Movie.status.NowShowing).SingleOrDefault();
+                                        if (checkMovie == null)
                                         {
-                                            System.Console.WriteLine("Movie Id Not Found please try again");
-                                            Id = Convert.ToInt32(System.Console.ReadLine());
+                                            System.Console.WriteLine("no such movie");
                                         }
-
-                                        while (movie.Status != "Now Showing" && Id == movie.MovieId)
+                                        else
                                         {
-                                            System.Console.WriteLine("Please enter a valid ID ");
-                                            Id = Convert.ToInt32(System.Console.ReadLine());
+                                            System.Console.WriteLine($"You select {checkMovie.MovieTitle}");
+
                                         }
-
-
 
                                         break;
                                     case "2":

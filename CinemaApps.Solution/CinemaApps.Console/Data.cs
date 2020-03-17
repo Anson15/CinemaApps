@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CinemaApps.SystemConsole.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,25 +9,33 @@ namespace CinemaApps.SystemConsole
 {
     public class Data
     {
-        public List<Model.User> GetUser()
+        public ICollection<User> Users { get; set; }
+        public ICollection<Movie> Movies { get; set; }
+        public ICollection<Mo>
+
+        public Data()
         {
-            List<Model.User> Users = new List<Model.User>()
-            {
-                new Model.User(){Username="John",Password="123",Email="John@gmail.com" },
-                new Model.User(){Username="Mike",Password="321",Email="Mike@gmail.com"}
-            };
-            return Users;
+            Users = new List<User>();
+            Movies = new List<Movie>();
         }
-        public List<Model.Movie> GetMovie()
+
+        public void GetUser()
         {
-            List<Model.Movie> Movies = new List<Model.Movie>()
-            {
-                new Model.Movie(){MovieTitle="The Avengers",ReleaseDate=new DateTime(2020, 4, 12),Status="Coming Soon"},
-                new Model.Movie(){MovieTitle="The Justice",ReleaseDate=new DateTime(2020,4,12),Status="Coming Soon"},
-                new Model.Movie(){MovieTitle="The Matrix",ReleaseDate=new DateTime(2020,3,05),Status="Now Showing"},
-                new Model.Movie(){MovieTitle="Lord Of The Rings",ReleaseDate=new DateTime(2020,3,09),Status="Now Showing"}
-            };
-            return Movies;
+            Users.Add(new User() { UserId = Guid.NewGuid(), Username = "John", Password = "123" });
+            Users.Add(new User() { UserId = Guid.NewGuid(), Username = "Cena", Password = "321" });
+        }
+
+        public void GetMovie()
+        {
+            Movies.Add(new Movie() { MovieTitle = "The Justice League", ReleaseDate = new DateTime(), Status = Movie.status.ComingSoon });
+            Movies.Add(new Movie() { MovieTitle = "The Avenger", ReleaseDate = new DateTime(), Status = Movie.status.ComingSoon });
+            Movies.Add(new Movie() { MovieTitle = "The Matrix", ReleaseDate = new DateTime(), Status = Movie.status.NowShowing });
+            Movies.Add(new Movie() { MovieTitle = "Lord Of The Rings", ReleaseDate = new DateTime(), Status = Movie.status.NowShowing });
+        }
+
+        public  void GetHall()
+        {
+            
         }
     }
 }
