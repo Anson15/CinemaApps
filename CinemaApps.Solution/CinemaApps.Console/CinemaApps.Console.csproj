@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Data.cs" />
     <Compile Include="Model\Hall.cs" />
+    <Compile Include="Model\HallSeat.cs" />
     <Compile Include="Model\Movie.cs" />
     <Compile Include="Model\MovieHall.cs" />
     <Compile Include="Model\User.cs" />

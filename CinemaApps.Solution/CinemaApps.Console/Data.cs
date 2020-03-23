@@ -1,9 +1,12 @@
-﻿using CinemaApps.SystemConsole.Model;
+﻿using CinemaApps.Console.Model;
+using CinemaApps.SystemConsole.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using static CinemaApps.Console.Model.HallSeat;
 
 namespace CinemaApps.SystemConsole
 {
@@ -11,12 +14,17 @@ namespace CinemaApps.SystemConsole
     {
         public ICollection<User> Users { get; set; }
         public ICollection<Movie> Movies { get; set; }
-        public ICollection<Mo>
+        public ICollection<Hall> Halls { get; set; }
+        public ICollection<MovieHall> MovieHalls { get; set; }
+        public ICollection<HallSeat> HallSeats { get; set; }
 
         public Data()
         {
             Users = new List<User>();
             Movies = new List<Movie>();
+            Halls = new List<Hall>();
+            MovieHalls = new List<MovieHall>();
+            HallSeats = new List<HallSeat>();
         }
 
         public void GetUser()
@@ -27,15 +35,55 @@ namespace CinemaApps.SystemConsole
 
         public void GetMovie()
         {
-            Movies.Add(new Movie() { MovieTitle = "The Justice League", ReleaseDate = new DateTime(), Status = Movie.status.ComingSoon });
-            Movies.Add(new Movie() { MovieTitle = "The Avenger", ReleaseDate = new DateTime(), Status = Movie.status.ComingSoon });
-            Movies.Add(new Movie() { MovieTitle = "The Matrix", ReleaseDate = new DateTime(), Status = Movie.status.NowShowing });
-            Movies.Add(new Movie() { MovieTitle = "Lord Of The Rings", ReleaseDate = new DateTime(), Status = Movie.status.NowShowing });
+            Movies.Add(new Movie() { MovieId = 101, MovieTitle = "The Justice League", ReleaseDate = new DateTime(), Status = Movie.status.ComingSoon });
+            Movies.Add(new Movie() { MovieId = 102, MovieTitle = "The Avenger", ReleaseDate = new DateTime(), Status = Movie.status.ComingSoon });
+            Movies.Add(new Movie() { MovieId = 103, MovieTitle = "The Matrix", ReleaseDate = new DateTime(), Status = Movie.status.NowShowing });
+            Movies.Add(new Movie() { MovieId = 104, MovieTitle = "Lord Of The Rings", ReleaseDate = new DateTime(), Status = Movie.status.NowShowing });
         }
 
-        public  void GetHall()
+        public void GetHall()
         {
-            
+            Halls.Add(new Hall() { Id = 3, HallNo = "1", TotalRows = 5, TotalColumns = 10 });
+            Halls.Add(new Hall() { Id = 4, HallNo = "2", TotalRows = 3, TotalColumns = 8 });
+        }
+
+        public void GetMovieHall()
+        {
+            MovieHalls.Add(new MovieHall() { HallId = 3, MovieId = 103, MovieDateTime = new DateTime(2020, 3, 18, 13, 30, 0), Id = 301 });
+            MovieHalls.Add(new MovieHall() { HallId = 3, MovieId = 103, MovieDateTime = new DateTime(2020, 3, 18, 16, 30, 0), Id = 302 });
+            MovieHalls.Add(new MovieHall() { HallId = 3, MovieId = 103, MovieDateTime = new DateTime(2020, 3, 18, 19, 30, 0), Id = 303 });
+            MovieHalls.Add(new MovieHall() { HallId = 4, MovieId = 104, MovieDateTime = new DateTime(2020, 3, 18, 11, 30, 0), Id = 304 });
+            MovieHalls.Add(new MovieHall() { HallId = 4, MovieId = 104, MovieDateTime = new DateTime(2020, 3, 18, 17, 30, 0), Id = 305 });
+            MovieHalls.Add(new MovieHall() { HallId = 4, MovieId = 104, MovieDateTime = new DateTime(2020, 3, 18, 20, 30, 0), Id = 306 });
+        }
+
+        public void GetMovieHallDetails()
+        {
+            SeatsDetail seats;
+            Random rdm = new Random();
+            foreach (var item in MovieHalls)
+            {
+                
+                for (int i = 1; i <= 5; i++)
+                {
+                    for (int j = 1; j <= 10; j++)
+                    {
+                        
+                        Thread.Sleep(1);
+                        int s = rdm.Next(0, 2);
+
+                        if (s == 0)
+                        {
+                            seats = SeatsDetail.Empty;
+                        }
+                        else
+                        {
+                            seats = SeatsDetail.Taken;
+                        }
+                        HallSeats.Add(new HallSeat() {Id=1,TimeStartId=item.Id, HallId = item.HallId, Rows = i, Columns = j, Seat = i.ToString() + "," + j.ToString(), SeatStatus = seats });
+                    }
+                }
+            }
         }
     }
 }

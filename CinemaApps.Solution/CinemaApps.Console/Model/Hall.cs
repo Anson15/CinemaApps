@@ -9,8 +9,10 @@ namespace CinemaApps.SystemConsole.Model
     public class Hall
     {
         public int Id { get; set; }
-        public int MovieId { get; set; }
-        public int HallId { get; set; }
-        public DateTime MovieDateTime { get; set; }
+        public string HallNo { get; set; }
+        public int TotalRows { get; set; }
+        public int TotalColumns { get; set; }
+        public int TotalSeat => TotalRows * TotalColumns;
+
     }
 }
