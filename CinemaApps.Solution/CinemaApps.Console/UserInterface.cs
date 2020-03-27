@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CinemaApps.SystemConsole
@@ -22,7 +23,7 @@ namespace CinemaApps.SystemConsole
             var check = true;
             while (check)
             {
-                
+
                 System.Console.WriteLine("Welcome To TGV Cinema Ticket App.");
                 System.Console.WriteLine("\n \t 1.View all movies");
                 System.Console.WriteLine("\t 2.Login");
@@ -63,18 +64,18 @@ namespace CinemaApps.SystemConsole
                             var checkUser = data.Users.Where(c => c.Username == username && c.Password == password).SingleOrDefault();
 
                             //Check the username and password if is null or just a space it will check
-                            
-                            if (checkUser !=null)
+
+                            if (checkUser != null)
                             {
                                 check2 = false;
                             }
-                            else if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password)||checkUser==null)
+                            else if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password) || checkUser == null)
                             {
                                 System.Console.WriteLine("User not found");
 
                             }
-                           
-                            
+
+
 
                         };
 
@@ -120,7 +121,7 @@ namespace CinemaApps.SystemConsole
                                         System.Console.Clear();
 
                                         System.Console.WriteLine($"You select {checkMovie.MovieTitle}");
-                                        
+
                                         var selectedMovieHall = data.MovieHalls.Where(mh => mh.MovieId == checkMovie.MovieId);
 
                                         var MovieTable = new ConsoleTable("ID", "Time Showing");
@@ -149,46 +150,43 @@ namespace CinemaApps.SystemConsole
 
                                         foreach (var item in checkHallId)
                                         {
-                                            if (checkHall.Id == 3)
+
+                                            System.Console.Write($"{item.Seat} {item.SeatStatus} ");
+                                            //for hall id =3,it will like spacing when the loop get 1,10
+                                            if (item.Seat == "1,10" || item.Seat == "2,10" || item.Seat == "3,10" || item.Seat == "4,10" || item.Seat == "5,10")
                                             {
-                                                
-                                                System.Console.Write($"{item.Seat} {item.SeatStatus} ");
-                                                //for hall id =3,it will like spacing when the loop get 1,10
-                                                if (item.Seat == "1,10" || item.Seat == "2,10" || item.Seat == "3,10" || item.Seat == "4,10" || item.Seat == "5,10")
-                                                {
-                                                    System.Console.WriteLine("\n");
-                                                }
+                                                System.Console.WriteLine("\n");
                                             }
-                                            else
-                                            {
-                                                System.Console.Write($"{item.Seat} {item.SeatStatus} ");
-                                                if (item.Seat == "1,8" || item.Seat == "2,8" || item.Seat == "3,8")
-                                                {
-                                                    System.Console.WriteLine("\n");
-                                                }
-                                            }
-                                            
 
                                         }
-
-                                        System.Console.WriteLine("Please select your seat Example: 1,1 :");
-                                        string SelectSeat = Convert.ToString(System.Console.ReadLine());
-
-                                        var CheckSeatStatus = data.HallSeats.Where(s => s.Seat == SelectSeat).FirstOrDefault();
-
-                                        if (CheckSeatStatus != null)
+                                        var checkseat = true;
+                                        while (checkseat)
                                         {
-                                            if (CheckSeatStatus.SeatStatus == HallSeat.SeatsDetail.Taken)
-                                            {
-                                                System.Console.WriteLine("Seat taken.");
-                                            }
-                                            else
-                                            {
-                                                System.Console.WriteLine("Selected successfully.");
-                                                CheckSeatStatus.SeatStatus = HallSeat.SeatsDetail.Taken;
-                                            }
-                                        }
+                                            System.Console.WriteLine("Please select your seat Example: 1,1 :");
 
+                                            string SelectSeat = Convert.ToString(System.Console.ReadLine());
+
+                                            var CheckSeatStatus = data.HallSeats.Where(s => s.Seat == SelectSeat).FirstOrDefault();
+
+
+                                            if (CheckSeatStatus != null)
+                                            {
+                                                if (CheckSeatStatus.SeatStatus == HallSeat.SeatsDetail.Taken)
+                                                {
+                                                    System.Console.WriteLine("Seat taken.");
+                                                    checkseat = true;
+                                                }
+                                                else
+                                                {
+                                                    System.Console.WriteLine("Selected successfully.");
+                                                    CheckSeatStatus.SeatStatus = HallSeat.SeatsDetail.Taken;
+                                                    Thread.Sleep(1000);
+                                                    checkseat = false;
+                                                    
+                                                }
+                                            }
+
+                                        }
                                     }
 
                                     break;

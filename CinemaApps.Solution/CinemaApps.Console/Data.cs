@@ -44,7 +44,7 @@ namespace CinemaApps.SystemConsole
         public void GetHall()
         {
             Halls.Add(new Hall() { Id = 3, HallNo = "1", TotalRows = 5, TotalColumns = 10 });
-            Halls.Add(new Hall() { Id = 4, HallNo = "2", TotalRows = 3, TotalColumns = 8 });
+            Halls.Add(new Hall() { Id = 4, HallNo = "2", TotalRows = 4, TotalColumns = 10 });
         }
 
         public void GetMovieHall()
@@ -74,8 +74,8 @@ namespace CinemaApps.SystemConsole
                 }
                 else
                 {
-                    totalCol = 8;
-                    Totalrow = 3;
+                    totalCol = 10;
+                    Totalrow = 4;
                 }
 
                 //randomly set the seat status
