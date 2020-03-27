@@ -22,8 +22,8 @@ namespace CinemaApps.SystemConsole
             var check = true;
             while (check)
             {
-
-                System.Console.WriteLine("Welcome To Anson Cinema Ticket App.");
+                
+                System.Console.WriteLine("Welcome To TGV Cinema Ticket App.");
                 System.Console.WriteLine("\n \t 1.View all movies");
                 System.Console.WriteLine("\t 2.Login");
                 System.Console.WriteLine("\t 3.Exit app");
@@ -33,6 +33,7 @@ namespace CinemaApps.SystemConsole
                 {
                     case "1":
 
+                        System.Console.Clear();
 
                         var table = new ConsoleTable("ID", "Movie Title", "Release Date", "Status");
 
@@ -58,18 +59,22 @@ namespace CinemaApps.SystemConsole
 
                             System.Console.Write("Password : ");
                             string password = System.Console.ReadLine();
-
+                            //Find user name and password
                             var checkUser = data.Users.Where(c => c.Username == username && c.Password == password).SingleOrDefault();
 
-                            if (checkUser == null)
+                            //Check the username and password if is null or just a space it will check
+                            
+                            if (checkUser !=null)
+                            {
+                                check2 = false;
+                            }
+                            else if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password)||checkUser==null)
                             {
                                 System.Console.WriteLine("User not found");
 
                             }
-                            else
-                            {
-                                check2 = false;
-                            }
+                           
+                            
 
                         };
 
@@ -87,6 +92,7 @@ namespace CinemaApps.SystemConsole
                             {
                                 case "1":
                                     System.Console.Clear();
+
                                     var Showingmovie = new ConsoleTable("ID", "Movie Title", "Release Date");
 
                                     foreach (var movies in data.Movies)
@@ -101,7 +107,7 @@ namespace CinemaApps.SystemConsole
 
                                     System.Console.Write("Enter the selected movie ID : ");
                                     int Id = Convert.ToInt32(System.Console.ReadLine());
-
+                                    //find the movie that the status is now showing
                                     var checkMovie = data.Movies.Where(m => m.MovieId == Id && m.Status == Model.Movie.status.NowShowing).SingleOrDefault();
 
                                     if (checkMovie == null)
@@ -112,8 +118,9 @@ namespace CinemaApps.SystemConsole
                                     else
                                     {
                                         System.Console.Clear();
-                                        System.Console.WriteLine($"You select {checkMovie.MovieTitle}");
 
+                                        System.Console.WriteLine($"You select {checkMovie.MovieTitle}");
+                                        
                                         var selectedMovieHall = data.MovieHalls.Where(mh => mh.MovieId == checkMovie.MovieId);
 
                                         var MovieTable = new ConsoleTable("ID", "Time Showing");
@@ -142,7 +149,26 @@ namespace CinemaApps.SystemConsole
 
                                         foreach (var item in checkHallId)
                                         {
-                                            System.Console.Write($"{item.Seat} {item.SeatStatus} ");
+                                            if (checkHall.Id == 3)
+                                            {
+                                                
+                                                System.Console.Write($"{item.Seat} {item.SeatStatus} ");
+                                                //for hall id =3,it will like spacing when the loop get 1,10
+                                                if (item.Seat == "1,10" || item.Seat == "2,10" || item.Seat == "3,10" || item.Seat == "4,10" || item.Seat == "5,10")
+                                                {
+                                                    System.Console.WriteLine("\n");
+                                                }
+                                            }
+                                            else
+                                            {
+                                                System.Console.Write($"{item.Seat} {item.SeatStatus} ");
+                                                if (item.Seat == "1,8" || item.Seat == "2,8" || item.Seat == "3,8")
+                                                {
+                                                    System.Console.WriteLine("\n");
+                                                }
+                                            }
+                                            
+
                                         }
 
                                         System.Console.WriteLine("Please select your seat Example: 1,1 :");
@@ -170,6 +196,7 @@ namespace CinemaApps.SystemConsole
                                     check3 = false;
                                     break;
                                 default:
+                                    System.Console.Clear();
                                     System.Console.WriteLine("Please select between 1-2");
                                     break;
                             }
@@ -177,9 +204,11 @@ namespace CinemaApps.SystemConsole
                         }
                         break;
                     case "3":
+                        System.Console.WriteLine("Thank you for using TGV Cinema Ticket App");
                         Environment.Exit(0);
                         break;
                     default:
+                        System.Console.Clear();
                         System.Console.WriteLine("Please select option between 1-3");
                         break;
                 }

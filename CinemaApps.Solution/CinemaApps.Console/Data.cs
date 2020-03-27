@@ -35,10 +35,10 @@ namespace CinemaApps.SystemConsole
 
         public void GetMovie()
         {
-            Movies.Add(new Movie() { MovieId = 101, MovieTitle = "The Justice League", ReleaseDate = new DateTime(), Status = Movie.status.ComingSoon });
-            Movies.Add(new Movie() { MovieId = 102, MovieTitle = "The Avenger", ReleaseDate = new DateTime(), Status = Movie.status.ComingSoon });
-            Movies.Add(new Movie() { MovieId = 103, MovieTitle = "The Matrix", ReleaseDate = new DateTime(), Status = Movie.status.NowShowing });
-            Movies.Add(new Movie() { MovieId = 104, MovieTitle = "Lord Of The Rings", ReleaseDate = new DateTime(), Status = Movie.status.NowShowing });
+            Movies.Add(new Movie() { MovieId = 101, MovieTitle = "The Justice League", ReleaseDate = new DateTime(2020,4,5), Status = Movie.status.ComingSoon });
+            Movies.Add(new Movie() { MovieId = 102, MovieTitle = "The Avenger", ReleaseDate = new DateTime(2020,4,1), Status = Movie.status.ComingSoon });
+            Movies.Add(new Movie() { MovieId = 103, MovieTitle = "The Matrix", ReleaseDate = new DateTime(2020,3,10), Status = Movie.status.NowShowing });
+            Movies.Add(new Movie() { MovieId = 104, MovieTitle = "Lord Of The Rings", ReleaseDate = new DateTime(2020,3,7), Status = Movie.status.NowShowing });
         }
 
         public void GetHall()
@@ -61,12 +61,27 @@ namespace CinemaApps.SystemConsole
         {
             SeatsDetail seats;
             Random rdm = new Random();
+            
             foreach (var item in MovieHalls)
             {
-                
-                for (int i = 1; i <= 5; i++)
+                int Totalrow = 0;
+                int totalCol = 0;
+
+                if (item.HallId == 3)
                 {
-                    for (int j = 1; j <= 10; j++)
+                    totalCol = 10;
+                    Totalrow = 5;
+                }
+                else
+                {
+                    totalCol = 8;
+                    Totalrow = 3;
+                }
+
+                //randomly set the seat status
+                for (int i = 1; i <= Totalrow; i++)
+                {
+                    for (int j = 1; j <= totalCol; j++)
                     {
                         
                         Thread.Sleep(1);
